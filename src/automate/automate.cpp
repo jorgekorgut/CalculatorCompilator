@@ -95,7 +95,7 @@ void Automate::reduction_somme()
 	if ((int) *((*symboles_depiles)[0]) != EXP && (int) *((*symboles_depiles)[2]) != EXP
 			&& (int) *((*symboles_depiles)[1]) != PLUS)
 	{
-		declancher_erreur("Not a sum expression.", get_lexer_position());
+		declencher_erreur("Not a sum expression.", get_lexer_position());
 	}
 	ExpressionPlus * exp = new ExpressionPlus((Expression*) ((*symboles_depiles)[0]),
 			(Expression*) ((*symboles_depiles)[2]));
@@ -115,7 +115,7 @@ void Automate::reduction_multiplication()
 	if ((int) *((*symboles_depiles)[0]) != EXP && (int) *((*symboles_depiles)[2]) != EXP
 			&& (int) *((*symboles_depiles)[1]) != MULT)
 	{
-		declancher_erreur("Not a multiplication expression.", get_lexer_position());
+		declencher_erreur("Not a multiplication expression.", get_lexer_position());
 	}
 	ExpressionMult * exp = new ExpressionMult((Expression*) ((*symboles_depiles)[0]),
 			(Expression*) ((*symboles_depiles)[2]));
@@ -135,7 +135,7 @@ void Automate::reduction_parenthesis()
 	if ((int) *((*symboles_depiles)[0]) != OPENPAR && (int) *((*symboles_depiles)[2]) != CLOSEPAR
 			&& (int) *((*symboles_depiles)[1]) != EXP)
 	{
-		declancher_erreur("Not a parenthesis expression.", get_lexer_position());
+		declencher_erreur("Not a parenthesis expression.", get_lexer_position());
 	}
 	Expression * exp = (Expression*) ((*symboles_depiles)[1]);
 	depiler_etat(3);
@@ -219,7 +219,7 @@ void Automate::transition(Symbole * symbole)
 	states->top()->transition(*this, symbole);
 }
 
-void Automate::declancher_erreur(string message, int position)
+void Automate::declencher_erreur(string message, int position)
 {
 	std::cout << "ERROR::POS=" << position << "::" << message << std::endl;
 	fin = -1;

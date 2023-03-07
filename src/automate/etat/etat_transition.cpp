@@ -17,7 +17,7 @@ void E_0::transition(Automate & automate, Symbole * symbole)
 			automate.decalage_etat_non_terminal(new E_1(), symbole);
 			break;
 		default:
-			automate.declancher_erreur("'val' ou '(' attendue mais n'a pas été trouvée", automate.get_lexer_position());
+			automate.declencher_erreur("'val' ou '(' attendu mais n'a pas été trouvé", automate.get_lexer_position());
 			break;
 	}
 }
@@ -37,7 +37,7 @@ void E_1::transition(Automate & automate, Symbole * symbole)
 			automate.terminer();
 			break;
 		default:
-			automate.declancher_erreur("'+', '*' ou '$' attendue mais n'a pas été trouvée", automate.get_lexer_position());
+			automate.declencher_erreur("'+', '*' ou '$' attendu mais n'a pas été trouvé", automate.get_lexer_position());
 			break;
 	}
 }
@@ -57,7 +57,7 @@ void E_2::transition(Automate & automate, Symbole * symbole)
 			automate.decalage_etat_non_terminal(new E_6(), symbole);
 			break;
 		default:
-			automate.declancher_erreur("'val', '(' ou 'EXP' attendue mais n'a pas été trouvée", automate.get_lexer_position());
+			automate.declencher_erreur("'val', '(' ou 'EXP' attendu mais n'a pas été trouvé", automate.get_lexer_position());
 			break;
 	}
 }
@@ -88,7 +88,7 @@ void E_3::transition(Automate & automate, Symbole * symbole)
 		}
 			break;
 		default:
-			automate.declancher_erreur("'+', '*', ')' ou '$' est attendue mais n'a pas été trouvée", automate.get_lexer_position());
+			automate.declencher_erreur("'+', '*', ')' ou '$' est attendu mais n'a pas été trouvé", automate.get_lexer_position());
 			break;
 	}
 }
@@ -108,7 +108,7 @@ void E_4::transition(Automate & automate, Symbole * symbole)
 			automate.decalage_etat_non_terminal(new E_7(), symbole);
 			break;
 		default:
-			automate.declancher_erreur("'val', '(' ou 'EXP' est attendue mais n'a pas été trouvée", automate.get_lexer_position());
+			automate.declencher_erreur("'val', '(' ou 'EXP' est attendu mais n'a pas été trouvé", automate.get_lexer_position());
 			break;
 	}
 }
@@ -128,7 +128,7 @@ void E_5::transition(Automate & automate, Symbole * symbole)
 			automate.decalage_etat_non_terminal(new E_8(), symbole);
 			break;
 		default:
-			automate.declancher_erreur("'val', '(' ou 'EXP' attendue mais n'a pas été trouvée", automate.get_lexer_position());
+			automate.declencher_erreur("'val', '(' ou 'EXP' attendu mais n'a pas été trouvé", automate.get_lexer_position());
 			break;
 	}
 }
@@ -148,7 +148,7 @@ void E_6::transition(Automate & automate, Symbole * symbole)
 			automate.decalage_etat_terminal(new E_9(), symbole);
 			break;
 		default:
-			automate.declancher_erreur("'+', '*' ou ')' attendue mais n'a pas été trouvée", automate.get_lexer_position());
+			automate.declencher_erreur("'+', '*' ou ')' attendu mais n'a pas été trouvé", automate.get_lexer_position());
 			break;
 	}
 }
@@ -171,7 +171,7 @@ void E_7::transition(Automate & automate, Symbole * symbole)
 			automate.reduction_somme();
 			break;
 		default:
-			automate.declancher_erreur("'+', '*', ')' ou '$' est attendue mais n'a pas été trouvée", automate.get_lexer_position());
+			automate.declencher_erreur("'+', '*', ')' ou '$' est attendu mais n'a pas été trouvé", automate.get_lexer_position());
 			break;
 	}
 }
@@ -194,7 +194,7 @@ void E_8::transition(Automate & automate, Symbole * symbole)
 			automate.reduction_multiplication();
 			break;
 		default:
-			automate.declancher_erreur("'+', '*', ')' ou '$' attendue en position mais n'a pas été trouvée", automate.get_lexer_position());
+			automate.declencher_erreur("'+', '*', ')' ou '$' attendu en position mais n'a pas été trouvé", automate.get_lexer_position());
 			break;
 	}
 }
@@ -217,7 +217,7 @@ void E_9::transition(Automate & automate, Symbole * symbole)
 			automate.reduction_parenthesis();
 			break;
 		default:
-			automate.declancher_erreur("'+', '*', ')' ou '$' attendue mais n'a pas été trouvée", automate.get_lexer_position());
+			automate.declencher_erreur("'+', '*', ')' ou '$' attendu mais n'a pas été trouvé", automate.get_lexer_position());
 			break;
 	}
 }

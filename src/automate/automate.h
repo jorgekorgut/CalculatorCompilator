@@ -26,7 +26,7 @@ class Automate
 		void reduction_constante();
 		int get_lexer_position();
 
-		void declancher_erreur(string message,int position);
+		void declencher_erreur(string message,int position);
 	private:
 		std::stack<Etat*> * states;
 		std::stack<Symbole*> * symboles;
