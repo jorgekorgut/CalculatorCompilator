@@ -3,7 +3,7 @@
 
 #include <stack>
 #include <vector>
-#include "states/state.h"
+#include "etat/etat.h"
 #include "symbole/symbole.h"
 #include "lexer.h"
 
@@ -16,23 +16,23 @@ class Automate
 		void executer();
 		void terminer();
 		int resultat();
-		bool syntaxCorrecte();
+		bool tester_syntaxe();
 
-		void decalageEtatTerminal(State * etat, Symbole * symbole);
-		void decalageEtatNonTerminal(State * etat, Symbole * symbole);
-		void reductionSomme();
-		void reductionMultiplication();
-		void reductionParenthesis();
-		void reductionConstante();
-		int getLexerPosition();
+		void decalage_etat_terminal(Etat * etat, Symbole * symbole);
+		void decalage_etat_non_terminal(Etat * etat, Symbole * symbole);
+		void reduction_somme();
+		void reduction_multiplication();
+		void reduction_parenthesis();
+		void reduction_constante();
+		int get_lexer_position();
 
-		void raiseException(string message,int position);
+		void declancher_erreur(string message,int position);
 	private:
-		std::stack<State*> * states;
+		std::stack<Etat*> * states;
 		std::stack<Symbole*> * symboles;
 		Lexer lexer;
 
-		void empiler_etat(State * etat);
+		void empiler_etat(Etat * etat);
 		void empiler_symbole(Symbole * symbole);
 		void avancer_lexer();
 		void transition(Symbole * symbole);

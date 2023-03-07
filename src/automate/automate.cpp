@@ -1,5 +1,5 @@
 #include "automate.h"
-#include "states/states.h"
+#include "etat/etat_transition.h"
 #include <stack>
 #include <iostream>
 #include <cassert>
@@ -7,7 +7,7 @@
 Automate::Automate(string expression) :
 		lexer(expression)
 {
-	states = new stack<State*>();
+	states = new stack<Etat*>();
 	symboles = new stack<Symbole*>();
 }
 
@@ -32,7 +32,7 @@ Automate::~Automate()
 {
 	while (!states->empty())
 	{
-		State * top = states->top();
+		Etat * top = states->top();
 		delete top;
 		states->pop();
 	}
@@ -62,12 +62,12 @@ int Automate::resultat()
 	return symboles->top()->calculer();
 }
 
-bool Automate::syntaxCorrecte()
+bool Automate::tester_syntaxe()
 {
 	return (fin == 1);
 }
 
-void Automate::decalageEtatTerminal(State * etat, Symbole * symbole)
+void Automate::decalage_etat_terminal(Etat * etat, Symbole * symbole)
 {
 #ifdef DEBUG
 	std::cout << "== Decalage Etat Terminal" << std::endl;
@@ -77,7 +77,7 @@ void Automate::decalageEtatTerminal(State * etat, Symbole * symbole)
 	empiler_symbole(symbole);
 }
 
-void Automate::decalageEtatNonTerminal(State * etat, Symbole * symbole)
+void Automate::decalage_etat_non_terminal(Etat * etat, Symbole * symbole)
 {
 #ifdef DEBUG
 	std::cout << "== Decalage Etat Non Terminal" << std::endl;
@@ -86,7 +86,7 @@ void Automate::decalageEtatNonTerminal(State * etat, Symbole * symbole)
 	empiler_symbole(symbole);
 }
 
-void Automate::reductionSomme()
+void Automate::reduction_somme()
 {
 #ifdef DEBUG
 	std::cout << "== Starting reduction of Sum" << std::endl;
@@ -95,7 +95,7 @@ void Automate::reductionSomme()
 	if ((int) *((*symboles_depiles)[0]) != EXP && (int) *((*symboles_depiles)[2]) != EXP
 			&& (int) *((*symboles_depiles)[1]) != PLUS)
 	{
-		raiseException("Not a sum expression.", getLexerPosition());
+		declancher_erreur("Not a sum expression.", get_lexer_position());
 	}
 	ExpressionPlus * exp = new ExpressionPlus((Expression*) ((*symboles_depiles)[0]),
 			(Expression*) ((*symboles_depiles)[2]));
@@ -106,7 +106,7 @@ void Automate::reductionSomme()
 	delete symboles_depiles;
 }
 
-void Automate::reductionMultiplication()
+void Automate::reduction_multiplication()
 {
 #ifdef DEBUG
 	std::cout << "== Starting reduction of Multiplication" << std::endl;
@@ -115,7 +115,7 @@ void Automate::reductionMultiplication()
 	if ((int) *((*symboles_depiles)[0]) != EXP && (int) *((*symboles_depiles)[2]) != EXP
 			&& (int) *((*symboles_depiles)[1]) != MULT)
 	{
-		raiseException("Not a multiplication expression.", getLexerPosition());
+		declancher_erreur("Not a multiplication expression.", get_lexer_position());
 	}
 	ExpressionMult * exp = new ExpressionMult((Expression*) ((*symboles_depiles)[0]),
 			(Expression*) ((*symboles_depiles)[2]));
@@ -126,7 +126,7 @@ void Automate::reductionMultiplication()
 	delete symboles_depiles;
 }
 
-void Automate::reductionParenthesis()
+void Automate::reduction_parenthesis()
 {
 #ifdef DEBUG
 	std::cout << "== Starting reduction of Parenthesis" << std::endl;
@@ -135,7 +135,7 @@ void Automate::reductionParenthesis()
 	if ((int) *((*symboles_depiles)[0]) != OPENPAR && (int) *((*symboles_depiles)[2]) != CLOSEPAR
 			&& (int) *((*symboles_depiles)[1]) != EXP)
 	{
-		raiseException("Not a parenthesis expression.", getLexerPosition());
+		declancher_erreur("Not a parenthesis expression.", get_lexer_position());
 	}
 	Expression * exp = (Expression*) ((*symboles_depiles)[1]);
 	depiler_etat(3);
@@ -146,12 +146,12 @@ void Automate::reductionParenthesis()
 	delete symboles_depiles;
 }
 
-int Automate::getLexerPosition()
+int Automate::get_lexer_position()
 {
 	return lexer.getPosition();
 }
 
-void Automate::reductionConstante()
+void Automate::reduction_constante()
 {
 #ifdef DEBUG
 	std::cout << "== Starting reduction of Constant" << std::endl;
@@ -164,7 +164,7 @@ void Automate::reductionConstante()
 	delete symboles_depiles;
 }
 
-void Automate::empiler_etat(State * etat)
+void Automate::empiler_etat(Etat * etat)
 {
 	states->push(etat);
 #ifdef DEBUG
@@ -199,7 +199,7 @@ void Automate::depiler_etat(int nombre_etats)
 {
 	for (int i = 0; i < nombre_etats; i++)
 	{
-		State * target = states->top();
+		Etat * target = states->top();
 		states->pop();
 		delete target;
 	}
@@ -219,7 +219,7 @@ void Automate::transition(Symbole * symbole)
 	states->top()->transition(*this, symbole);
 }
 
-void Automate::raiseException(string message, int position)
+void Automate::declancher_erreur(string message, int position)
 {
 	std::cout << "ERROR::POS=" << position << "::" << message << std::endl;
 	fin = -1;

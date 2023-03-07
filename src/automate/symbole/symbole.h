@@ -24,7 +24,7 @@ class Symbole
 		{
 			return ident;
 		}
-		virtual void Affiche();
+		virtual void afficher();
 		virtual int calculer()
 		{
 			return 0;
@@ -110,7 +110,7 @@ class Entier : public Symbole
 		}
 
 		int calculer();
-		virtual void Affiche();
+		virtual void afficher();
 	protected:
 		int valeur;
 };
