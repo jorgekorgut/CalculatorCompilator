@@ -1,4 +1,5 @@
 # Compilateur Calculatrice
+Auteurs : Maud Andruszak & Jorge Korgut Junior
 
 ## Execution du programme
 Pour compiler le programme ``` make ```
